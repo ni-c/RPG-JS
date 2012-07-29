@@ -10,7 +10,6 @@ Database.arpg = {
 		detection: {
 			_default: function(event) {
 				if (event.actionBattle.mode != 'passive') {
-
 					event.approachPlayer();
 					this.setEventMode(event, 'offensive');
 					
@@ -55,7 +54,6 @@ Database.arpg = {
 				event.moveRandom();
 				event.wait(25, false, function() {
 					event.detection = false;
-					self.setEventMode(event, 'normal');
 				});
 			}
 		},
