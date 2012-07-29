@@ -39,7 +39,7 @@ Database.arpg = {
 				var self = this;
 				event.turnTowardPlayer();
 				this.rpg.player.blink(30, 2);
-				event.action('attack_ennemy', function() {
+				event.action('attack_enemy', function() {
 					self.setEventMode(event, 'passive');
 				});
 				this.rpg.player.actionBattle.hp -= 5;
@@ -55,7 +55,7 @@ Database.arpg = {
 				event.moveRandom();
 				event.wait(25, false, function() {
 					event.detection = false;
-					this.setEventMode(event, 'normal');
+					self.setEventMode(event, 'normal');
 				});
 			}
 		},
@@ -71,7 +71,7 @@ Database.arpg = {
 				
 			}
 		},
-		ennemyDead: {
+		enemyDead: {
 						
 		}
 }
@@ -95,7 +95,7 @@ Arpg.prototype = {
 				eventPassive: {Object}<br />
 				eventOffensive: {Object}<br />
 				eventAffected: {Object}<br />
-				ennemyDead: {Object}<br />
+				enemyDead: {Object}<br />
 				<br />
 				Example :
 				<br />
@@ -127,17 +127,17 @@ Arpg.prototype = {
 	setActionBattle: function(prop) {
 		var i;
 		this.actionBattle = prop;
-		this.actionBattle.ennemy = [];
+		this.actionBattle.enemy = [];
 		for (i=0 ; i < this.rpg.events.length ; i++) {
 			if (this.rpg.events[i].actionBattle) {
-				this.actionBattle.ennemy.push(this.rpg.events[i]);
+				this.actionBattle.enemy.push(this.rpg.events[i]);
 			}
 		}
 		if (prop.displayHpBar) {
-			var ennemy;
-			for (i=0 ; i < this.actionBattle.ennemy.length ; i++) {
-				ennemy = this.actionBattle.ennemy[i];
-				this.displayBar(ennemy, ennemy.actionBattle.hp_max, ennemy.actionBattle.hp_max, 70, 5);
+			var enemy;
+			for (i=0 ; i < this.actionBattle.enemy.length ; i++) {
+				enemy = this.actionBattle.enemy[i];
+				this.displayBar(enemy, enemy.actionBattle.hp_max, enemy.actionBattle.hp_max, 70, 5);
 			}
 		}
 		if (prop.eventsCache) {
@@ -317,7 +317,7 @@ Arpg.prototype = {
 								this.rpg.animations[anim].play();
 							}
 							event.fadeOut(5, function() {
-								var item_drop = event.actionBattle.ennemyDead;
+								var item_drop = event.actionBattle.enemyDead;
 								var random = Math.floor(Math.random()*100);
 								var min = 0, max = 0, drop_id = null;
 								if (item_drop) {
@@ -333,7 +333,7 @@ Arpg.prototype = {
 								self.rpg.removeEvent(event.id);
 								if (drop_id != null) {
 									var drop_name = item_drop[drop_id].name;
-									var drop = self.actionBattle.ennemyDead ? self.actionBattle.ennemyDead[item_drop[drop_id].call] : false;
+									var drop = self.actionBattle.enemyDead ? self.actionBattle.enemyDead[item_drop[drop_id].call] : false;
 									if (drop) drop.call(self, event, drop_name);
 								}
 								

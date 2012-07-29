@@ -33,6 +33,9 @@ function Event(prop, rpg, name) {
 	if (!prop) return;
 	// Global
 	this.rpg = rpg;
+	
+	this.prop = prop;	
+	
 	/**
      * List of local switches. The key is the identifier, the value is a boolean (on or off)
 	 * @property self_switch
@@ -944,18 +947,26 @@ var p = {
 		var player = this.rpg.player;
 		var real_x = Math.floor(this.real_x / player.speed) * player.speed;
 		var real_y = Math.floor(this.real_y / player.speed) * player.speed;
+						
 		if (player) {
-			if (player.real_y < real_y) {
-				return 2;
-			}
-			 if (player.real_y > real_y) {
-				return 8;
-			}
-			 if (player.real_x > real_x) {
-				return 6;
-			}
-			 if (player.real_x < real_x) {
-				return 4;
+
+			diff_x = Math.abs(player.real_x - real_x); 
+			diff_y = Math.abs(player.real_y - real_y);
+
+			if (diff_y > diff_x) {
+				if (player.real_y < real_y) {
+					return 2;
+				}
+				if (player.real_y > real_y) {
+					return 8;
+				}
+			} else {
+				if (player.real_x > real_x) {
+					return 6;
+				}
+				if (player.real_x < real_x) {
+					return 4;
+				}
 			}
 		}
 		
@@ -987,7 +998,6 @@ var p = {
 			var dir = self.directionRelativeToPlayer();
 			if (dir) {
 			
-				//console.log(dir);
 				self.move(dir, function(moving) {
 					if (moving) {
 						approach();
