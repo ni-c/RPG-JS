@@ -1543,6 +1543,9 @@ var p = {
 	action: function(name, onFinish) {
 		// Initialize
 		var action = this.rpg.actions[name];
+
+		if (action == undefined) return false;		
+		
 		var i = 0;
 		var self = this;
 		var bmp_ini = this.bitmap;
